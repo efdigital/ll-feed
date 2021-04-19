@@ -22,6 +22,8 @@ export interface Item {
   copyright?: string;
 
   extensions?: Extension[];
+
+  media?: (string | Media)[];
 }
 
 export interface Enclosure {
@@ -30,6 +32,10 @@ export interface Enclosure {
   length?: number;
   title?: string;
   duration?: number;
+}
+
+export interface Media extends Enclosure {
+  medium?: string;
 }
 
 export interface Author {

@@ -1,7 +1,7 @@
 import * as convert from "xml-js";
 import { generator } from "./config";
 import { Feed } from "./feed";
-import { Author, Category, Enclosure, Item } from "./typings";
+import { Author, Category, Enclosure, Item, Media } from "./typings";
 import { sanitize } from "./utils";
 
 /**
@@ -11,6 +11,7 @@ export default (ins: Feed) => {
   const { options } = ins;
   let isAtom = false;
   let isContent = false;
+  let isMedia = false
 
   const base: any = {
     _declaration: { _attributes: { version: "1.0", encoding: "utf-8" } },
@@ -150,6 +151,12 @@ export default (ins: Feed) => {
       isContent = true;
       item["content:encoded"] = { _cdata: entry.content };
     }
+
+    if (Array.isArray(entry.media)) {
+      isMedia = true
+      item["media:content"] = entry.media.map(formatMedia)
+    }
+
     /**
      * Item Author
      * https://validator.w3.org/feed/docs/rss2.html#ltauthorgtSubelementOfLtitemgt
@@ -204,6 +211,11 @@ export default (ins: Feed) => {
   if (isAtom) {
     base.rss._attributes["xmlns:atom"] = "http://www.w3.org/2005/Atom";
   }
+
+  if (isMedia) {
+    base.rss._attributes["xmlns:media"] = "http://search.yahoo.com/mrss/";
+  }
+
   return convert.js2xml(base, { compact: true, ignoreComment: true, spaces: 4 });
 };
 
@@ -220,6 +232,24 @@ const formatEnclosure = (enclosure: string | Enclosure, mimeCategory = "image") 
 
   const type = new URL(enclosure.url).pathname.split(".").slice(-1)[0];
   return { _attributes: { length: 0, type: `${mimeCategory}/${type}`, ...enclosure } };
+};
+
+/**
+ * Returns a formated media
+ * @param media
+ * @param mimeCategory
+ */
+const formatMedia = (media: string | Media) => {
+  if (typeof media === "string") {
+    return { _attributes: { url: media } };
+  }
+
+  return {
+    url: media.url,
+    fileSize: media.length,
+    type: media.type,
+    medium: media.medium
+  }
 };
 
 /**
