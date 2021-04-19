@@ -245,10 +245,12 @@ const formatMedia = (media: string | Media) => {
   }
 
   return {
-    url: media.url,
-    fileSize: media.length,
-    type: media.type,
-    medium: media.medium
+    _attributes: {
+      url: media.url,
+      fileSize: media.length,
+      type: media.type,
+      medium: media.medium
+    }
   }
 };
 
