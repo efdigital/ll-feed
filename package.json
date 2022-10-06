@@ -1,6 +1,13 @@
 {
-  "name": "feed",
+  "name": "@efdigital/ll-feed",
   "version": "4.2.2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/efdigital/ll-feed.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "description": "Feed is a RSS, Atom and JSON feed generator for Node.js, making content syndication simple and intuitive!",
   "homepage": "https://github.com/jpmonette/feed",
   "author": "Jean-Philippe Monette <contact@jpmonette.net>",
