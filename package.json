@@ -1,9 +1,9 @@
 {
   "name": "@efdigital/ll-feed",
-  "version": "4.2.2",
+  "version": "5.0.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/efdigital/ll-feed.git"
+    "url": "https://github.com/jpmonette/feed.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -48,9 +48,5 @@
   },
   "bugs": {
     "url": "https://github.com/jpmonette/feed/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jpmonette/feed.git"
   }
 }
